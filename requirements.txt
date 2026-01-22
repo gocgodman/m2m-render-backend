@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+torch
+transkun
+pretty_midi
+librosa==0.9.2
+numpy
+soundfile
+pyfluidsynth
+scipy
