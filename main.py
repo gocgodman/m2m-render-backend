@@ -1,12 +1,8 @@
-from fastapi import FastAPI, UploadFile, File, BackgroundTasks, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from jobs import create_job, get_job
-from worker import run_m2m_pipeline
-import os
 
 app = FastAPI()
 
-# 🔓 CORS 설정 (모든 origin 허용)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,6 +10,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/ping")
+def ping():
+    return {"status": "ok"}
+
 
 
 UPLOAD_DIR = "/tmp/uploads"
@@ -63,4 +64,5 @@ def result(job_id: str):
     if job["status"] != "done":
         raise HTTPException(status_code=400, detail="Job not completed")
     return job["result"]
+
 
