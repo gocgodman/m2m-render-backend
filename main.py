@@ -1,5 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from jobs import create_job, get_job
+from worker import run_m2m_pipeline
+import os
 
 app = FastAPI()
 
@@ -64,5 +67,6 @@ def result(job_id: str):
     if job["status"] != "done":
         raise HTTPException(status_code=400, detail="Job not completed")
     return job["result"]
+
 
 
